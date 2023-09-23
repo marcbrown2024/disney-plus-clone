@@ -39,10 +39,11 @@ const Carousel = styled(Slider)`
 
   ul li button {
     &:before {
-      font-size: 10px;
+      font-size: 12px;
       color: rgb(150, 158, 171);
     }
   }
+
   li.slick-active::before {
     color: white;
   }
@@ -57,14 +58,15 @@ const Carousel = styled(Slider)`
 
 const Wrap = styled.div`
   cursor: pointer;
+  padding-right: 8px;
 
   img {
     width: 100%;
     height: 100%;
-    border-radius: 2px;
+    border-radius: 6px;
     box-shadow: rgba(0 0 0 / 69%) 0px 26px 30px -10px,
-      rgb(0 0 0 / 73%) 0px 16px 10px -10px;
-    border: 4px solid transparent;
+      rgb(0 0 0 / 73%) 0px 20px 10px -10px;
+    border: 1px solid transparent;
     transition-duration: 500ms;
 
     &:hover {
