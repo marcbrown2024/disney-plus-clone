@@ -17,9 +17,9 @@ function Header() {
   const userPhoto = useSelector(selectUserPhoto);
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        dispatch(
+        await dispatch(
           setUserLogin({
             name: user.displayName,
             email: user.email,
@@ -29,7 +29,10 @@ function Header() {
         navigate("/");
       }
     });
-  });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const signIn = () => {
     auth
@@ -52,7 +55,7 @@ function Header() {
 
   const signOut = () => {
     auth.signOut().then(() => {
-      dispatch(setSignOut);
+      dispatch(setSignOut());
       navigate("/login");
     });
   };
@@ -91,6 +94,7 @@ export default Header;
 
 const Nav = styled.nav`
   height: 70px;
+  width: 100%;
   background: #090b13;
   display: flex;
   align-items: center;
@@ -100,6 +104,7 @@ const Nav = styled.nav`
 
 const Logo = styled.img`
   width: 90px;
+  height: auto;
   cursor: pointer;
 `;
 
