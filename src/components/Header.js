@@ -20,7 +20,17 @@ function Header() {
     auth
       .signInWithPopup(provider)
       .then((result) => {
-        console.log(result);
+        let user = result.user;
+        dispatch(
+          setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+      })
+      .catch((error) => {
+        console.error("Error signing in:", error);
       });
   };
 
