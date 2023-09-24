@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { auth, provider } from "../firebase";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,21 @@ function Header() {
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
 
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(
+          setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+        navigate("/");
+      }
+    });
+  });
+
   const signIn = () => {
     auth
       .signInWithPopup(provider)
@@ -28,6 +43,7 @@ function Header() {
             photo: user.photoURL,
           })
         );
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error signing in:", error);
