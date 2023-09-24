@@ -34,7 +34,9 @@ function Header() {
           <span>Series</span>
         </a>
       </NavMenu>
-      <UserImg src="/images/userImage.jpg"></UserImg>
+      <Link to="/login">
+        <UserImg src="/images/userImage.jpg"></UserImg>
+      </Link>
     </Nav>
   );
 }
