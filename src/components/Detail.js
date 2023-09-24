@@ -83,11 +83,16 @@ const ImageTitle = styled.div`
   width: 35vw;
   min-width: 200px;
   margin-top: 60px;
+  position: relative;
 
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: fit;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    position: absolute;
+
   }
 `;
 
