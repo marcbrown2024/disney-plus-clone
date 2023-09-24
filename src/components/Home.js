@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Styled from "styled-components";
 import ImgSlider from "./ImgSlider";
 import Viewers from "./Viewers";
 import Movies from "./Movies";
+import { addMovie } from "../firebase";
 
 
 function Home() {
+
   return (
     <Container>
-      <ImgSlider/>
-      <Viewers/>
-      <Movies/>
+      <ImgSlider />
+      <Viewers />
+      <Movies />
     </Container>
   );
 }
