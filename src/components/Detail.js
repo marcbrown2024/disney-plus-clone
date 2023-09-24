@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import db from "../firebase";
 
 function Detail() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+
+  useEffect(() => {
+    db.collection("movies")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setMovie(doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+        }
+      });
+  }, [id]);
+
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
   return (
     <Container>
       <Background>
-        <img src="" alt="" />
+        <img src={movie.backgroundImg} alt="" />
       </Background>
       <ImageTitle>
-        <img src="" alt="" />
+        <img src={movie.titleImg} alt="" />
       </ImageTitle>
       <Controls>
         <PlayButton>
@@ -26,8 +47,8 @@ function Detail() {
           <img src="/images/group-icon.png" alt="" />
         </GroupWatchButton>
       </Controls>
-      <Subtitle></Subtitle>
-      <Description></Description>
+      <Subtitle>{movie.subTitle}</Subtitle>
+      <Description>{movie.description}</Description>
     </Container>
   );
 }
@@ -66,7 +87,7 @@ const ImageTitle = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fit;
   }
 `;
 

@@ -1,33 +1,36 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <Nav>
-      <Logo src="/images/logo.svg" alt=""/>
+      <Link to="/">
+        <Logo src="/images/logo.svg" alt="" />
+      </Link>
       <NavMenu>
         <a href="#">
-          <img src="/images/home-icon.svg" alt=""/>
+          <img src="/images/home-icon.svg" alt="" />
           <span>Home</span>
         </a>
         <a href="#">
-          <img src="/images/search-icon.svg" alt=""/>
+          <img src="/images/search-icon.svg" alt="" />
           <span>Search</span>
         </a>
         <a href="#">
-          <img src="/images/watchlist-icon.svg" alt=""/>
+          <img src="/images/watchlist-icon.svg" alt="" />
           <span>WatchList</span>
         </a>
         <a href="#">
-          <img src="/images/original-icon.svg" alt=""/>
+          <img src="/images/original-icon.svg" alt="" />
           <span>Originals</span>
         </a>
         <a href="#">
-          <img src="/images/movie-icon.svg" alt=""/>
+          <img src="/images/movie-icon.svg" alt="" />
           <span>Movies</span>
         </a>
         <a href="#">
-          <img src="/images/series-icon.svg" alt=""/>
+          <img src="/images/series-icon.svg" alt="" />
           <span>Series</span>
         </a>
       </NavMenu>

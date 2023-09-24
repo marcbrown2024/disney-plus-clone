@@ -1,9 +1,4 @@
-// How to add firebase doc to database
-
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import movieCollection from "./disneyPlusMoviesData";
+import firebase from "firebase";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIoW0hMPW64i9HC_r_zlEboO7AIi0mrig",
@@ -15,8 +10,12 @@ const firebaseConfig = {
   measurementId: "G-EDEH6NLGBN",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const analytics = getAnalytics(app);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const db = firebaseApp.firestore();
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+const storage = firebase.storage();
+
+export { auth, provider, storage };
+export default db;
 
