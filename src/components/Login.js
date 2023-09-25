@@ -7,7 +7,7 @@ function Login() {
       <Content>
         <LogoOne src="/images/cta-logo-one.svg" />
         <SignUp>
-          <a href="">Get all three</a>
+          <a href="/">Get all three</a>
         </SignUp>
         <Description>
           <p>
