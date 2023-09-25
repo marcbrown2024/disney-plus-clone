@@ -5,36 +5,55 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 function Movies() {
   const movies = useSelector(selectMovies);
+
+  const recommendedMovies = movies.filter(
+    (movie) => movie.type === "recommend"
+  );
+  const newMovies = movies.filter((movie) => movie.type === "new");
+  const originalsMovies = movies.filter((movie) => movie.type === "original");
+  const trendingMovies = movies.filter((movie) => movie.type === "trending");
+
   return (
     <Container>
       <h4>Recommended For You</h4>
       <Content>
-        {movies &&
-          movies.map((movie) => (
-            <Wrap key={movie.id}>
-              <Link to={`/detail/${movie.id}`}>
-                <img src={movie.cardImg} />
-              </Link>
-            </Wrap>
-          ))}
+        {recommendedMovies.map((movie) => (
+          <Wrap key={movie.id}>
+            <Link to={`/detail/${movie.id}`}>
+              <img src={movie.cardImg} alt={`Recommended: ${movie.title}`} />
+            </Link>
+          </Wrap>
+        ))}
       </Content>
       <h4>New To Disney+</h4>
       <Content>
-        <Wrap>
-          <img src="" />
-        </Wrap>
+        {newMovies.map((movie) => (
+          <Wrap key={movie.id}>
+            <Link to={`/detail/${movie.id}`}>
+              <img src={movie.cardImg} alt={`New: ${movie.title}`} />
+            </Link>
+          </Wrap>
+        ))}
       </Content>
       <h4>Originals</h4>
       <Content>
-        <Wrap>
-          <img src="" />
-        </Wrap>
+        {originalsMovies.map((movie) => (
+          <Wrap key={movie.id}>
+            <Link to={`/detail/${movie.id}`}>
+              <img src={movie.cardImg} alt={`Originals: ${movie.title}`} />
+            </Link>
+          </Wrap>
+        ))}
       </Content>
       <h4>Trending</h4>
       <Content>
-        <Wrap>
-          <img src="" />
-        </Wrap>
+        {trendingMovies.map((movie) => (
+          <Wrap key={movie.id}>
+            <Link to={`/detail/${movie.id}`}>
+              <img src={movie.cardImg} alt={`Trending: ${movie.title}`} />
+            </Link>
+          </Wrap>
+        ))}
       </Content>
     </Container>
   );
@@ -42,7 +61,9 @@ function Movies() {
 
 export default Movies;
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding-bottom: 20px;
+`;
 
 const Content = styled.div`
   display: grid;

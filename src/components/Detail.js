@@ -2,18 +2,32 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import db from "../firebase";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 function Detail() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        navigate(`/detail/${movie?.id}`);
+      } else {
+        navigate(`/login`);
+      }
+    });
+  }, [movie]);
+  
   useEffect(() => {
     db.collection("movies")
       .doc(id)
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setMovie(doc.data());
+          setMovie({...doc.data(), id: doc.id});
+          console.log(doc.id);
         } else {
           // doc.data() will be undefined in this case
         }
@@ -156,7 +170,7 @@ const GroupWatchButton = styled(AddButton)`
 
 const Subtitle = styled.div`
   margin-top: 26px;
-  color; rgb(249, 249, 249);
+  color: rgb(249, 249, 249);
   font-size: 15px;
   min-height: 20px;
 `;

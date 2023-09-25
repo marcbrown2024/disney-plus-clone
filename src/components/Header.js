@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { auth, provider } from "../firebase";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   selectUserName,
   selectUserPhoto,
@@ -9,6 +9,7 @@ import {
   setSignOut,
 } from "../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import AccountMenu from "./AccountMenu";
 
 function Header() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function Header() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        await dispatch(
+        dispatch(
           setUserLogin({
             name: user.displayName,
             email: user.email,
@@ -62,7 +63,9 @@ function Header() {
 
   return (
     <Nav>
-      <Logo src="/images/logo.svg" alt="" />
+      <Link to="/">
+        <Logo src="/images/logo.svg" alt="" />
+      </Link>
       {!userName ? (
         <LoginContainer>
           <Login onClick={signIn}>Log In</Login>
@@ -71,7 +74,9 @@ function Header() {
         <>
           <NavMenu>
             <img src="/images/home-icon.svg" alt="" />
-            <span>Home</span>
+            <Link to="/">
+              <span>Home</span>
+            </Link>
             <img src="/images/search-icon.svg" alt="" />
             <span>Search</span>
             <img src="/images/watchlist-icon.svg" alt="" />
@@ -83,7 +88,7 @@ function Header() {
             <img src="/images/series-icon.svg" alt="" />
             <span>Series</span>
           </NavMenu>
-          <UserImg onClick={signOut} src="/images/userImage.jpg"></UserImg>
+          <AccountMenu signOut={signOut} userPhoto={userPhoto} />
         </>
       )}
     </Nav>
@@ -95,10 +100,9 @@ export default Header;
 const Nav = styled.nav`
   height: 70px;
   width: 100%;
-  background: #090b13;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0 36px;
 `;
 
@@ -110,51 +114,39 @@ const Logo = styled.img`
 
 const NavMenu = styled.div`
   display: flex;
+  margin-left: 60px;
 
-  a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    padding: 0 12px;
+  img {
+    height: 20px;
+    margin-right: -5px;
+  }
 
-    img {
-      height: 20px;
-      padding-right: 5px;
+  span {
+    font-size: 15px;
+    letter-spacing: 1.42px;
+    position: relative;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 20px;
+
+    &:after {
+      content: "";
+      height: 2px;
+      background: white;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+      opacity: 0;
+      transform: scaleX(0);
+      transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
     }
 
-    span {
-      font-size: 13px;
-      letter-spacing: 1.42px;
-      position: relative;
-
-      &:after {
-        content: "";
-        height: 2px;
-        background: white;
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -6px;
-        opacity: 0;
-        transform: scaleX(0);
-        transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-      }
-    }
-    &:hover {
-      span:after {
-        opacity: 1;
-        transform: scaleX(1);
-      }
+    &:hover:after {
+      opacity: 1;
+      transform: scaleX(1);
     }
   }
-`;
-
-const UserImg = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
 `;
 
 const LoginContainer = styled.div`
